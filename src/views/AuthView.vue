@@ -17,7 +17,12 @@
           :rules="rules"
           label="password"
         ></v-text-field>
-        <span class="float-right">Forgot password?</span>
+        <span class="float-right">
+          Forgot password?
+          <v-tooltip activator="parent" location="bottom"
+            >Очень жаль...</v-tooltip
+          >
+        </span>
       </v-form>
       <v-btn rounded="lg" variant="outlined">sign in</v-btn>
     </div>

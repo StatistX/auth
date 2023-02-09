@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <router-view />
+      <RouterView />
     </v-main>
   </v-app>
 </template>
@@ -10,8 +10,6 @@
 export default {
   name: "App",
 
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
 };
 </script>

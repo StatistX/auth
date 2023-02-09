@@ -1,37 +1,48 @@
 <template>
-  <div class="auth-form mt-4">
-    <h2 class="auth-form__header">Auth</h2>
-    <div class="auth-form__content">
-      <div class="auth-form__heading my-4">
-        <span>Enter</span>
-        <span>Register</span>
-      </div>
-      <v-form @submit.prevent>
-        <v-text-field
-          v-model="firstName"
-          :rules="rules"
-          label="e-mail"
-        ></v-text-field>
-        <v-text-field
-          v-model="firstName"
-          :rules="rules"
-          label="password"
-        ></v-text-field>
-        <span class="float-right">
-          Forgot password?
-          <v-tooltip activator="parent" location="bottom"
-            >Очень жаль...</v-tooltip
-          >
-        </span>
-      </v-form>
-      <v-btn rounded="lg" variant="outlined">sign in</v-btn>
-    </div>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col>
+        <div class="auth-form mt-4">
+          <h2 class="auth-form__header">Auth</h2>
+          <div class="auth-form__content">
+            <div class="auth-form__heading my-4">
+              <span>Enter</span>
+              <span>Register</span>
+            </div>
+            <v-form @submit.prevent>
+              <v-text-field
+                v-model="firstName"
+                :rules="rules"
+                label="e-mail"
+              ></v-text-field>
+              <v-text-field
+                v-model="firstName"
+                :rules="rules"
+                label="password"
+              ></v-text-field>
+              <span class="float-right">
+                Forgot password?
+                <v-tooltip activator="parent" location="bottom"
+                  >Очень жаль...</v-tooltip
+                >
+              </span>
+            </v-form>
+            <v-btn rounded="lg" variant="outlined">sign in</v-btn>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import { useStore } from "vuex";
 export default {
   setup() {
+    const store = useStore();
+    const { user } = store.state;
+    console.log(user);
+    localStorage.setItem("auth", "true");
     return {};
   },
 };

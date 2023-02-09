@@ -3,7 +3,7 @@
     <HeaderLayout />
     <v-row>
       <v-col>
-        <p>Home</p>
+        <p>Contacts</p>
       </v-col>
     </v-row>
   </v-container>
@@ -11,15 +11,13 @@
 
 <script>
 import HeaderLayout from "@/components/HeaderLayout.vue";
-import { defineComponent } from "vue";
 
-// Components
-
-export default defineComponent({
-  name: "HomeView",
-  components: { HeaderLayout },
-  mounted() {
-    console.log(this.$router);
+export default {
+  setup() {
+    return {};
   },
-});
+  components: { HeaderLayout },
+};
 </script>
+
+<style lang="scss" scoped></style>

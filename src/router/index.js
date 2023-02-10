@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import ContactsView from "../views/ContactsView.vue";
 import TableViewVue from "@/views/TableView.vue";
+import UserItem from "@/components/UserItem.vue";
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
     // this generates a separate chunk (table.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: TableViewVue,
+  },
+  {
+    path: "/table/:id",
+    component: UserItem,
   },
   {
     path: "/auth",

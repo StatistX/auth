@@ -3,7 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import ContactsView from "../views/ContactsView.vue";
 import TableViewVue from "@/views/TableView.vue";
-import UserItem from "@/components/UserItem.vue";
+import PostItem from "@/views/PostItem.vue";
 
 const routes = [
   {
@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: "/table/:id",
-    component: UserItem,
+    component: PostItem,
   },
   {
     path: "/auth",

@@ -70,9 +70,8 @@ export default {
           this.post = resp2.value.data;
         })
         .catch((err) => {
-          this.errorMessage = `An error has occured: ${err}`;
-          console.log(`error: ${this.errorMessage}`);
-          throw new Error(this.errorMessage);
+          console.log(`error: ${err}`);
+          throw new Error(err);
         })
         .finally(() => {
           this.loading = false;

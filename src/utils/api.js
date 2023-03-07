@@ -15,7 +15,7 @@ const getComments = async (id) => {
 };
 
 const getPost = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}`);
+  const response = await axios.get(`${baseUrl}posts/${id}`);
   return response;
 };
 

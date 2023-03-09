@@ -16,18 +16,21 @@
                 label="e-mail"
               ></v-text-field>
               <v-text-field
-                v-model="firstName"
+                v-model="password"
                 :rules="rules"
                 label="password"
               ></v-text-field>
+              <p>error: {{ error }}</p>
               <span class="float-right">
                 Forgot password?
                 <v-tooltip activator="parent" location="bottom"
-                  >Очень жаль...</v-tooltip
+                  >Later...</v-tooltip
                 >
               </span>
             </v-form>
-            <v-btn rounded="lg" variant="outlined">sign in</v-btn>
+            <v-btn @click="login" rounded="lg" variant="outlined"
+              >sign in</v-btn
+            >
           </div>
         </div>
       </v-col>
@@ -37,13 +40,28 @@
 
 <script>
 import { useStore } from "vuex";
+import { ref } from "vue";
 export default {
   setup() {
+    const firstName = ref("");
+    const password = ref("");
+    const error = ref("");
     const store = useStore();
     const { user } = store.state;
     console.log(user);
     localStorage.setItem("auth", "true");
-    return {};
+    const login = async () => {
+      try {
+        await store.dispatch("logIn", {
+          email: firstName,
+          password,
+        });
+      } catch (err) {
+        console.log(err.message);
+        error.value = err.message;
+      }
+    };
+    return { firstName, password, login };
   },
 };
 </script>

@@ -12,15 +12,12 @@
             <v-form @submit.prevent>
               <v-text-field
                 v-model="firstName"
-                :rules="rules"
                 label="e-mail"
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
                 :rules="rules"
-                label="password"
               ></v-text-field>
-              <p>error: {{ error }}</p>
+              <v-text-field v-model="password" label="password"></v-text-field>
+              <p v-if="error" class="text-red-lighten-1">{{ error }}</p>
+
               <span class="float-right">
                 Forgot password?
                 <v-tooltip activator="parent" location="bottom"
@@ -28,7 +25,11 @@
                 >
               </span>
             </v-form>
-            <v-btn @click="login" rounded="lg" variant="outlined"
+            <v-btn
+              @click="login"
+              rounded="lg"
+              variant="outlined"
+              :disabled="!disableAuthBtn"
               >sign in</v-btn
             >
           </div>
@@ -40,7 +41,8 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { emailPattern } from "../utils";
 export default {
   setup() {
     const firstName = ref("");
@@ -48,20 +50,35 @@ export default {
     const error = ref("");
     const store = useStore();
     const { user } = store.state;
+    const rules = [
+      (value) => !!value || "Required.",
+      (value) => (value || "").length <= 20 || "Max 20 characters",
+      (value) => {
+        return emailPattern.test(value) || "Invalid e-mail.";
+      },
+    ];
     console.log(user);
     localStorage.setItem("auth", "true");
     const login = async () => {
       try {
         await store.dispatch("logIn", {
-          email: firstName,
-          password,
+          email: firstName.value,
+          password: password.value,
         });
       } catch (err) {
-        console.log(err.message);
+        console.dir(err.message);
         error.value = err.message;
       }
     };
-    return { firstName, password, login };
+
+    const disableAuthBtn = computed(() => {
+      return (
+        firstName.value &&
+        emailPattern.test(firstName.value) &&
+        !(password.value.length < 4)
+      );
+    });
+    return { firstName, password, error, rules, disableAuthBtn, login };
   },
 };
 </script>

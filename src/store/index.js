@@ -48,10 +48,16 @@ const store = createStore({
 
     async logIn(context, { email, password }) {
       const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+
+      if (response.status === 400) {
+        console.log(response);
+      }
       if (response) {
         context.commit("SET_USER", response.user);
         console.log(this.state.user.data);
       } else {
+        console.log("sdfsdf");
         throw new Error("login failed");
       }
     },

@@ -13,9 +13,14 @@
               <v-text-field
                 v-model="firstName"
                 label="e-mail"
-                :rules="rules"
+                :rules="emailRules"
               ></v-text-field>
-              <v-text-field v-model="password" label="password"></v-text-field>
+              <v-text-field
+                v-model="password"
+                type="password"
+                label="password"
+                :rules="passwordRules"
+              ></v-text-field>
               <p v-if="error" class="text-red-lighten-1">{{ error }}</p>
 
               <span class="float-right">
@@ -43,28 +48,33 @@
 import { useStore } from "vuex";
 import { ref, computed } from "vue";
 import { emailPattern } from "../utils";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const firstName = ref("");
     const password = ref("");
     const error = ref("");
     const store = useStore();
-    const { user } = store.state;
-    const rules = [
+    const router = useRouter();
+    const emailRules = [
       (value) => !!value || "Required.",
       (value) => (value || "").length <= 20 || "Max 20 characters",
       (value) => {
         return emailPattern.test(value) || "Invalid e-mail.";
       },
     ];
-    console.log(user);
-    localStorage.setItem("auth", "true");
+    const passwordRules = [
+      (value) => !!value || "Required.",
+      (value) => value.length >= 6 || "Min 6 characters",
+    ];
+    // localStorage.setItem("auth", "true");
     const login = async () => {
       try {
         await store.dispatch("logIn", {
           email: firstName.value,
           password: password.value,
         });
+        router.push("/");
       } catch (err) {
         console.dir(err.message);
         error.value = err.message;
@@ -75,10 +85,19 @@ export default {
       return (
         firstName.value &&
         emailPattern.test(firstName.value) &&
-        !(password.value.length < 4)
+        !(password.value.length < 6)
       );
     });
-    return { firstName, password, error, rules, disableAuthBtn, login };
+
+    return {
+      firstName,
+      password,
+      error,
+      emailRules,
+      disableAuthBtn,
+      passwordRules,
+      login,
+    };
   },
 };
 </script>

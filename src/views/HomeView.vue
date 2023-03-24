@@ -4,6 +4,7 @@
     <v-row>
       <v-col>
         <p>Home</p>
+        <p>Hello, {{ user?.data.displayName }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -11,15 +12,18 @@
 
 <script>
 import HeaderLayout from "@/components/HeaderLayout.vue";
-import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
-// Components
-
-export default defineComponent({
-  name: "HomeView",
-  components: { HeaderLayout },
-  mounted() {
-    console.log(this.$router);
+export default {
+  setup() {
+    const store = useStore();
+    const user = computed(() => {
+      return store.getters.user;
+    });
+    console.log(user);
+    return { user };
   },
-});
+  components: { HeaderLayout },
+};
 </script>

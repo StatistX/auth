@@ -10,7 +10,7 @@
       </nav>
     </v-col>
     <v-col cols="2">
-      <v-btn>{{ "Log out".toUpperCase() }}</v-btn>
+      <v-btn @click="logout">{{ "Log out".toUpperCase() }}</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -33,12 +33,18 @@ export default {
         text: "contacts",
         href: "contacts",
       },
-      {
-        text: "auth",
-        href: "/auth",
-      },
     ],
   }),
+  methods: {
+    async logout() {
+      try {
+        await this.$store.dispatch("logOut");
+        this.$router.push("/auth");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
 <style>

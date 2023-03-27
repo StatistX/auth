@@ -65,7 +65,6 @@ export default {
       (value) => !!value || "Required.",
       (value) => value.length >= 6 || "Min 6 characters",
     ];
-    // localStorage.setItem("auth", "true");
     const register = async () => {
       try {
         await store.dispatch("register", {

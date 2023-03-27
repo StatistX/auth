@@ -68,7 +68,6 @@ export default {
       (value) => !!value || "Required.",
       (value) => value.length >= 6 || "Min 6 characters",
     ];
-    // localStorage.setItem("auth", "true");
     const login = async () => {
       try {
         await store.dispatch("logIn", {
@@ -77,7 +76,6 @@ export default {
         });
         router.push("/");
       } catch (err) {
-        console.dir(err.message);
         error.value = err.message;
       }
     };

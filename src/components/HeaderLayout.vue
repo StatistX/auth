@@ -40,6 +40,7 @@ export default {
       try {
         await this.$store.dispatch("logOut");
         this.$router.push("/auth");
+        localStorage.removeItem("currentUser");
       } catch (error) {
         console.log(error);
       }

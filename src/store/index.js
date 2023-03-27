@@ -52,9 +52,7 @@ const store = createStore({
 
       if (response) {
         context.commit("SET_USER", response.user);
-        console.log(this.state.user.data);
       } else {
-        console.log("sdfsdf");
         throw new Error("login failed");
       }
     },

@@ -4,7 +4,7 @@
     <v-row>
       <v-col>
         <p>Home</p>
-        <p>Hello, {{ user?.data.displayName }}</p>
+        <p>Hello, {{ displayName }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -14,6 +14,7 @@
 import HeaderLayout from "@/components/HeaderLayout.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { auth } from "../firebaseConfig";
 
 export default {
   setup() {
@@ -21,8 +22,18 @@ export default {
     const user = computed(() => {
       return store.getters.user;
     });
-    console.log(user);
-    return { user };
+
+    const displayName = computed(() => {
+      return user.value.data.displayName;
+    });
+
+    auth.onAuthStateChanged((user) => {
+      store.dispatch("fetchUser", user);
+    });
+
+    localStorage.setItem("currentUser", JSON.stringify(user.value));
+
+    return { user, displayName };
   },
   components: { HeaderLayout },
 };

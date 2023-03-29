@@ -6,6 +6,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+// import router from "@/router";
 
 const store = createStore({
   state: {
@@ -39,7 +40,6 @@ const store = createStore({
       if (response) {
         context.commit("SET_USER", response.user);
         const { user } = response;
-        console.log(response);
         await updateProfile(user, { displayName: name });
       } else {
         throw new Error("Unable to register user");
@@ -48,10 +48,10 @@ const store = createStore({
 
     async logIn(context, { email, password }) {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
 
       if (response) {
         context.commit("SET_USER", response.user);
+        console.log(response.user);
       } else {
         throw new Error("login failed");
       }
@@ -60,18 +60,27 @@ const store = createStore({
     async logOut(context) {
       await signOut(auth);
       context.commit("SET_USER", null);
+      context.commit("SET_LOGGED_IN", false);
     },
 
-    async fetchUser(context, user) {
-      context.commit("SET_LOGGED_IN", user !== null);
-      if (user) {
-        context.commit("SET_USER", {
-          displayName: user.displayName,
-          email: user.email,
-        });
-      } else {
-        context.commit("SET_USER", null);
-      }
+    async fetchUser(context) {
+      console.log("store");
+
+      auth.onAuthStateChanged(async (user) => {
+        if (user === null) {
+          context.commit("SET_USER", null);
+        } else {
+          context.commit("SET_USER", {
+            displayName: user.displayName,
+            email: user.email,
+          });
+          context.commit("SET_LOGGED_IN", true);
+        }
+
+        // if (router.isReady() && router.currentRoute.value.path === "/auth") {
+        //   router.push("/");
+        // }
+      });
     },
   },
 });

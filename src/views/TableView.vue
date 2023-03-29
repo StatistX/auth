@@ -41,6 +41,7 @@ import HeaderLayout from "@/components/HeaderLayout.vue";
 import * as labs from "vuetify/labs/components";
 import { setTableHeaders } from "../utils";
 import { getPosts } from "@/utils/api";
+import { auth } from "../firebaseConfig";
 
 export default {
   data() {
@@ -80,6 +81,9 @@ export default {
     posts() {
       this.headers = setTableHeaders(this.posts, { sortable: false });
     },
+  },
+  created() {
+    console.log(auth.currentUser);
   },
 };
 </script>

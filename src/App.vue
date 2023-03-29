@@ -7,9 +7,16 @@
 </template>
 
 <script>
-export default {
-  name: "App",
+import { onBeforeMount } from "vue";
+import { useStore } from "vuex";
 
-  data: () => ({}),
+export default {
+  setup() {
+    const store = useStore();
+
+    onBeforeMount(async () => {
+      await store.dispatch("fetchUser");
+    });
+  },
 };
 </script>

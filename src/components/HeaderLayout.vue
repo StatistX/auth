@@ -9,7 +9,7 @@
         </li>
       </nav>
     </v-col>
-    <v-col cols="2">
+    <v-col class="d-flex justify-end" cols="2">
       <v-btn @click="logout">{{ "Log out".toUpperCase() }}</v-btn>
     </v-col>
   </v-row>
@@ -31,7 +31,7 @@ export default {
       },
       {
         text: "contacts",
-        href: "contacts",
+        href: "/contacts",
       },
     ],
   }),
@@ -40,7 +40,6 @@ export default {
       try {
         await this.$store.dispatch("logOut");
         this.$router.push("/auth");
-        localStorage.removeItem("currentUser");
       } catch (error) {
         console.log(error);
       }

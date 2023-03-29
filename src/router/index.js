@@ -17,6 +17,14 @@ const routes = [
     },
   },
   {
+    path: "/contacts",
+    name: "contacts",
+    component: ContactsView,
+    meta: {
+      requiedAuth: true,
+    },
+  },
+  {
     path: "/table",
     name: "table",
     component: TableViewVue,
@@ -41,14 +49,7 @@ const routes = [
     name: "register",
     component: RegisterView,
   },
-  {
-    path: "/contacts",
-    name: "contacts",
-    component: ContactsView,
-    meta: {
-      requiedAuth: true,
-    },
-  },
+  { path: "/:catchAll(.*)", redirect: "/" },
 ];
 
 const router = createRouter({
@@ -57,10 +58,18 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(auth.currentUser);
+  // if (to.path === "/auth" && auth.currentUser) {
+  //   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+  //   next("/");
+  //   return;
+  // }
+
+  localStorage.setItem("pathname", JSON.stringify(window.location.pathname));
 
   if (to.matched.some((path) => path.meta.requiedAuth)) {
     if (!auth.currentUser) {
+      console.log("!auth.currentuser");
       next("/auth");
       return;
     }

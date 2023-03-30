@@ -5,7 +5,6 @@ import RegisterView from "@/views/RegisterView.vue";
 import ContactsView from "../views/ContactsView.vue";
 import TableViewVue from "@/views/TableView.vue";
 import PostItem from "@/views/PostItem.vue";
-import { auth } from "../firebaseConfig";
 
 const routes = [
   {
@@ -58,18 +57,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // if (to.path === "/auth" && auth.currentUser) {
-  //   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-  //   next("/");
-  //   return;
-  // }
-
-  localStorage.setItem("pathname", JSON.stringify(window.location.pathname));
-
   if (to.matched.some((path) => path.meta.requiedAuth)) {
-    if (!auth.currentUser) {
-      console.log("!auth.currentuser");
+    if (!localStorage.getItem("userToken")) {
       next("/auth");
       return;
     }

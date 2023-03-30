@@ -25,7 +25,7 @@
             @update:options="getDataFromApi"
           >
             <template v-slot:[`item.id`]="{ item }">
-              <v-chip @click="clickMe(item)">
+              <v-chip @click="openPost(item)">
                 {{ item.raw.id }}
               </v-chip>
             </template>
@@ -41,7 +41,6 @@ import HeaderLayout from "@/components/HeaderLayout.vue";
 import * as labs from "vuetify/labs/components";
 import { setTableHeaders } from "../utils";
 import { getPosts } from "@/utils/api";
-import { auth } from "../firebaseConfig";
 
 export default {
   data() {
@@ -56,7 +55,7 @@ export default {
   },
   components: { HeaderLayout, ...labs },
   methods: {
-    clickMe(item) {
+    openPost(item) {
       this.$router.push(`/table/${item.raw.id}`);
     },
     async getDataFromApi({ page, itemsPerPage }) {
@@ -81,9 +80,6 @@ export default {
     posts() {
       this.headers = setTableHeaders(this.posts, { sortable: false });
     },
-  },
-  created() {
-    console.log(auth.currentUser);
   },
 };
 </script>

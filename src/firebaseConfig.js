@@ -19,7 +19,4 @@ const auth = getAuth(app);
 
 auth.setPersistence(browserLocalPersistence);
 
-console.log("auth from firebaseConfig", auth);
-console.log("currentUser from firebaseConfig", auth.currentUser);
-
 export { app, auth };

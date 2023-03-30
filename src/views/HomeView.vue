@@ -24,19 +24,13 @@ export default {
       return store.getters.user;
     });
 
-    console.log("home, user from store", user);
-
-    console.log("home, user from auth.currentUser", auth.currentUser);
-
     const displayName = computed(() => {
-      return user?.value?.data?.displayName || "";
+      return user?.value?.data?.displayName || "Unnamed";
     });
 
     auth.onAuthStateChanged((user) => {
       store.dispatch("fetchUser", user);
     });
-
-    // localStorage.setItem("currentUser", JSON.stringify(user.value));
 
     return { user, displayName };
   },

@@ -11,7 +11,11 @@
             :controls="controls"
             :zoom="15"
           >
-            <YandexMarker :coordinates="coordinates" :marker-id="123" />
+            <YandexMarker :coordinates="coordinates" :marker-id="123">
+              <template #component>
+                <CustomBalloon />
+              </template>
+            </YandexMarker>
           </YandexMap>
         </v-card>
       </v-col>
@@ -22,6 +26,7 @@
 <script>
 import HeaderLayout from "@/components/HeaderLayout.vue";
 import { YandexMap, YandexMarker } from "vue-yandex-maps";
+import CustomBalloon from "../components/CustomBulloon.vue";
 import { ref } from "vue";
 
 export default {
@@ -40,12 +45,17 @@ export default {
     };
     return { coordinates, settings, controls, detailedControls };
   },
-  components: { HeaderLayout, YandexMap, YandexMarker },
+  components: { HeaderLayout, YandexMap, YandexMarker, CustomBalloon },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .yandex-container {
   height: 400px;
+}
+
+.yandex-balloon {
+  height: 100px;
+  width: 160px;
 }
 </style>

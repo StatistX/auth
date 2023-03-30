@@ -41,6 +41,7 @@ const store = createStore({
         context.commit("SET_USER", response.user);
         const { user } = response;
         await updateProfile(user, { displayName: name });
+        localStorage.setItem("userToken", response.user.accessToken);
       } else {
         throw new Error("Unable to register user");
       }
@@ -51,7 +52,7 @@ const store = createStore({
 
       if (response) {
         context.commit("SET_USER", response.user);
-        console.log(response.user);
+        localStorage.setItem("userToken", response.user.accessToken);
       } else {
         throw new Error("login failed");
       }
@@ -61,11 +62,10 @@ const store = createStore({
       await signOut(auth);
       context.commit("SET_USER", null);
       context.commit("SET_LOGGED_IN", false);
+      localStorage.removeItem("userToken");
     },
 
     async fetchUser(context) {
-      console.log("store");
-
       auth.onAuthStateChanged(async (user) => {
         if (user === null) {
           context.commit("SET_USER", null);
@@ -76,10 +76,6 @@ const store = createStore({
           });
           context.commit("SET_LOGGED_IN", true);
         }
-
-        // if (router.isReady() && router.currentRoute.value.path === "/auth") {
-        //   router.push("/");
-        // }
       });
     },
   },

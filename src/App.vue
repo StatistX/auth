@@ -20,3 +20,8 @@ export default {
   },
 };
 </script>
+<style>
+* {
+  font-family: "Montserrat", Times, serif;
+}
+</style>

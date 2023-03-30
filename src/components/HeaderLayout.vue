@@ -30,6 +30,10 @@ export default {
         href: "/table",
       },
       {
+        text: "slider",
+        href: "/slider",
+      },
+      {
         text: "contacts",
         href: "/contacts",
       },

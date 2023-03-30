@@ -5,7 +5,6 @@ import RegisterView from "@/views/RegisterView.vue";
 import ContactsView from "../views/ContactsView.vue";
 import TableViewVue from "@/views/TableView.vue";
 import PostItem from "@/views/PostItem.vue";
-import SliderView from "@/views/SliderView.vue";
 
 const routes = [
   {
@@ -20,14 +19,6 @@ const routes = [
     path: "/contacts",
     name: "contacts",
     component: ContactsView,
-    meta: {
-      requiedAuth: true,
-    },
-  },
-  {
-    path: "/slider",
-    name: "slider",
-    component: SliderView,
     meta: {
       requiedAuth: true,
     },
